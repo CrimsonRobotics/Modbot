@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends IterativeRobot {
-	CANTalon frontleft;
+	CANTalon frontLeft;
 	CANTalon frontRight;
 	CANTalon backLeft;
 	CANTalon backRight;
@@ -21,12 +21,13 @@ public class Robot extends IterativeRobot {
 	
    
     public void robotInit() {
-    	frontleft = new CANTalon(1);
-    	frontRight = new CANTalon(2);
-    	backLeft = new CANTalon(8);
-    	backRight = new CANTalon(9);
+    	frontLeft = new CANTalon(100);
+    	frontRight = new CANTalon(100);
+    	backLeft = new CANTalon(2);
+    	backRight = new CANTalon(100);
     	left = new Joystick(0);
     	right = new Joystick(1);
+    	myDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
     	//CAN id's might not match up with current code(may be incorrect)
     	
     	
@@ -46,7 +47,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
     	while (isOperatorControl() && isEnabled()) {
-    		myDrive.tankDrive(-left.getX(),  -right.getX());;
+    		myDrive.tankDrive(-left.getX(),  -right.getX());
     		Timer.delay(0.01);
     	}
     }
