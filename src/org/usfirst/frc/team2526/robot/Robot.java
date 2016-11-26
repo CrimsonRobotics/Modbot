@@ -21,10 +21,10 @@ public class Robot extends IterativeRobot {
 	
    
     public void robotInit() {
-    	frontLeft = new CANTalon(100);
-    	frontRight = new CANTalon(100);
+    	frontLeft = new CANTalon(100);//Needs to obtain correct ID
+    	frontRight = new CANTalon(100);//Need to obtain correct ID
     	backLeft = new CANTalon(2);
-    	backRight = new CANTalon(100);
+    	backRight = new CANTalon(100);//Need to obtain correct ID
     	left = new Joystick(0);
     	right = new Joystick(1);
     	myDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
@@ -43,11 +43,10 @@ public class Robot extends IterativeRobot {
     	
     	}
     
-
     
     public void teleopPeriodic() {
     	while (isOperatorControl() && isEnabled()) {
-    		myDrive.tankDrive(-left.getX(),  -right.getX());
+    		myDrive.arcadeDrive(left.getX(), right.getY());
     		Timer.delay(0.01);
     	}
     }
