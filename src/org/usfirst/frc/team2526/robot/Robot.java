@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
     	while (isOperatorControl() && isEnabled()) {
-    		//myDrive.tankDrive(left.getX(), right.getY());
+    		//myDrive.tankDrive(-left.getX(), -right.getX());
     		myDrive.arcadeDrive(left.getX(), right.getY());
     		//encoderDis(sampleEncoder);
     		Timer.delay(0.01);
