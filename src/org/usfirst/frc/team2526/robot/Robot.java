@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2526.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends IterativeRobot {
+	Encoder sampleEncoder;
 	CANTalon frontLeft;
 	CANTalon frontRight;
 	CANTalon backLeft;
@@ -19,8 +21,13 @@ public class Robot extends IterativeRobot {
 	Joystick left;
 	Joystick right;
 	
-
+	public void encoderDis(Encoder encoder){
+		double distance = encoder.getDistance();
+		SmartDashboard.putNumber("Encoder Distance", distance);
+	}
+	
     public void robotInit() {
+    	//sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
     	frontLeft = new CANTalon(100);//Needs to obtain correct ID
     	frontRight = new CANTalon(100);//Need to obtain correct ID
     	backLeft = new CANTalon(2);
@@ -48,7 +55,9 @@ public class Robot extends IterativeRobot {
     	while (isOperatorControl() && isEnabled()) {
     		//myDrive.tankDrive(left.getX(), right.getY());
     		myDrive.arcadeDrive(left.getX(), right.getY());
+    		//encoderDis(sampleEncoder);
     		Timer.delay(0.01);
+    		
     	}
     }
     
