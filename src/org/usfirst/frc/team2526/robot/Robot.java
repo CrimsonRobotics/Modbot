@@ -21,17 +21,18 @@ public class Robot extends IterativeRobot {
 	Joystick left;
 	Joystick right;
 	
-	public void encoderDis(Encoder encoder){
+	public double encoderDis(Encoder encoder){
 		double distance = encoder.getDistance();
 		SmartDashboard.putNumber("Encoder Distance", distance);
+		return distance;
 	}
 	
     public void robotInit() {
-    	//sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-    	frontLeft = new CANTalon(100);//Needs to obtain correct ID
-    	frontRight = new CANTalon(100);//Need to obtain correct ID
-    	backLeft = new CANTalon(2);
-    	backRight = new CANTalon(100);//Need to obtain correct ID
+    	sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+    	frontLeft = new CANTalon(2);//Needs to obtain correct ID
+    	frontRight = new CANTalon(1);//Need to obtain correct ID
+    	backLeft = new CANTalon(8);
+    	backRight = new CANTalon(9);//Need to obtain correct ID
     	left = new Joystick(0);
     	right = new Joystick(1);
     	myDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
@@ -54,8 +55,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	while (isOperatorControl() && isEnabled()) {
     		//myDrive.tankDrive(-left.getX(), -right.getX());
-    		myDrive.arcadeDrive(left.getX(), right.getY());
-    		//encoderDis(sampleEncoder);
+    		myDrive.arcadeDrive(left.getY(), right.getX());
+    		encoderDis(sampleEncoder);
     		Timer.delay(0.01);
     		
     	}
