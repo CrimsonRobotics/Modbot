@@ -29,14 +29,14 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-    	frontLeft = new CANTalon(2);//Needs to obtain correct ID
-    	frontRight = new CANTalon(1);//Need to obtain correct ID
+    	frontLeft = new CANTalon(2);
+    	frontRight = new CANTalon(1);
     	backLeft = new CANTalon(8);
-    	backRight = new CANTalon(9);//Need to obtain correct ID
+    	backRight = new CANTalon(9);
     	left = new Joystick(0);
     	right = new Joystick(1);
     	myDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
-    	//CAN id's might not match up with current code(may be incorrect)
+    	
     	
     	
     }
