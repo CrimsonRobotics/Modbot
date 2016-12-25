@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
     
     public static void PIDSetup(CANTalon talon){
     	talon.changeControlMode(TalonControlMode.Position);
-    	talon.setPID(0.3, 0, 0); // You can also set the values on the fly using the web-based configuration
+    	talon.setPID(0.3, 0, 0); //  read Basecamp post to learn how to tune-MTA. You can also set the values on the fly using the web-based configuration
     	talon.set(1000);
     }
     public void teleopPeriodic() {
