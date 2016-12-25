@@ -2,12 +2,12 @@
 package org.usfirst.frc.team2526.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -43,15 +43,22 @@ public class Robot extends IterativeRobot {
     
 	
     public void autonomousInit() {
-    	
+    
     }
 
     
     public void autonomousPeriodic() {
-    	
+    	PIDSetup(frontRight);
+    	PIDSetup(backRight);
+    	PIDSetup(frontLeft);
+    	PIDSetup(backLeft);
     	}
     
-    
+    public static void PIDSetup(CANTalon talon){
+    	talon.changeControlMode(TalonControlMode.Position);
+    	talon.setPID(0.3, 0, 0); // You can also set the values on the fly using the web-based configuration
+    	talon.set(1000);
+    }
     public void teleopPeriodic() {
     	while (isOperatorControl() && isEnabled()) {
     		//myDrive.tankDrive(-left.getX(), -right.getX());
