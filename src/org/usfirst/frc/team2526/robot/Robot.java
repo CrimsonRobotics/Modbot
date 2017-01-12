@@ -58,69 +58,67 @@ public class Robot extends IterativeRobot {
 		frontLeft = new CANTalon(2);
 		frontRight = new CANTalon(1);
 		backLeft = new CANTalon(8);
-		backRight = new CANTalon(9);
+		backRight = new CANTalon(9); //encoder attached
 		left = new Joystick(0);
 		right = new Joystick(1);
 		leftButton = new JoystickButton(left,2);
 		myDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
-
-		//set the PID settings
-		//backLeft.setPID(1, 0, 0);
-		//backLeft.setPosition(0);
-		//backRight.setPID(1, 0, 0);
-		//backRight.setPosition(0);
-
-
-		//backRight.setVoltageRampRate(2);
-		//backLeft.setVoltageRampRate(2);
-
-
 
 	}
 
 
 	public void autonomousInit() {
 		hasCommandBeenIssued = false;
+		
+		//setup left
 		backLeft.reset();
 		
 		backLeft.setPosition(0);
 		frontLeft.setPosition(0);
 
-		//backLeft.reset(); //resets position
 		backLeft.changeControlMode(CANTalon.TalonControlMode.Position);
-		//backLeft.set(1);  //speed
-		//backLeft.changeControlMode(TalonControlMode.Position);
-		//talon.changeControlMode(ControlMode.Position); //Change control mode of talon, default is PercentVbus (-1.0 to 1.0)
 		backLeft.setPID( 1.0, 0.0, 0.0); //Set the PID constants (p, i, d)
-		//backLeft.setPID(1.0, 0.0, 0.0, 0, 360, 0.025, 0);
+
 
 		backLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 
-		//talon.setFeedbackDevice(FeedbackDevice.QuadEncoder); //Set the feedback device that is hooked up to the talon
-
-		//frontLeft.changeControlMode(TalonControlMode.Position);
-		//frontLeft.setPID(1, 0, 0.0); //Set the PID constants (p, i, d)
-		//frontLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-
 		frontLeft.changeControlMode(CANTalon.TalonControlMode.Follower);
-		//backLeft.reverseOutput(false);
 		frontLeft.set(backLeft.getDeviceID());
 		
 		backLeft.reverseSensor(false);
 		
 		backLeft.configEncoderCodesPerRev(100);
+		frontLeft.configEncoderCodesPerRev(100);
 
 		backLeft.enableControl(); //Enable PID control on the talon
 		frontLeft.enableControl();
 
-		//backLeft.setPosition(1000);
+		
+		//setup right
+		backRight.reset();
+		
+		backRight.setPosition(0);
+		frontRight.setPosition(0);
+
+		backRight.changeControlMode(CANTalon.TalonControlMode.Position);
+		backRight.setPID( 1.0, 0.0, 0.0); //Set the PID constants (p, i, d)
+
+
+		backRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+
+		frontRight.changeControlMode(CANTalon.TalonControlMode.Follower);
+		frontRight.set(backRight.getDeviceID());
+		
+		backRight.reverseSensor(false);
+		
+		backRight.configEncoderCodesPerRev(100);
+		frontRight.configEncoderCodesPerRev(100);
+
+		backRight.enableControl(); //Enable PID control on the talon
+		frontRight.enableControl();
+		
 		x += 1;
 		SmartDashboard.putString("Test Label:", x + " autoInit" );
-
-		//backLeft.setSetpoint(1000); //position
-
-		//backLeft.set(1000); 
-		//frontLeft.set(5000);
 
 	}
 
@@ -134,18 +132,16 @@ public class Robot extends IterativeRobot {
 		i += 1;
 		
 		backLeft.enableControl();
-		//backLeft.enable();
-		//backLeft.set(500);
+		backRight.enableControl();
 		
-		//backLeft.setSetpoint(500);
-		
-		//SmartDashboard.putNumber("Position: ", backLeft.getEncPosition());
 		if (!hasCommandBeenIssued) {
 
 			//backLeft.set(5000);
 
 			backLeft.setPosition(0);
+			backRight.setPosition(0);
 			backLeft.setSetpoint(revolutions * 100);
+			backRight.setSetpoint(revolutions * 100);
 			//backLeft.set(500);
 			//frontLeft.set(5000);
 			
@@ -162,11 +158,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Backleft getClosedLoopError 1: ", backLeft.getClosedLoopError());
 		SmartDashboard.putNumber("Backleft Velocity: " , backLeft.getCloseLoopRampRate());
 		SmartDashboard.putNumber("Backleft getPosition: " , backLeft.getPosition());
-		SmartDashboard.putNumber("FrontLeft getClosedLoopError 1: ", frontLeft.getClosedLoopError());
+		SmartDashboard.putNumber("FrontLeft getClosedLoopError 1: ", backRight.getClosedLoopError());
 		SmartDashboard.putNumber("FrontLeft Velocity: " , frontLeft.getEncVelocity());
 		SmartDashboard.putNumber("FrontLeft getPosition: " , frontLeft.getPosition());
-
-		//frontLeft.set(5000);
 		
 		Timer.delay(0.01);
 
