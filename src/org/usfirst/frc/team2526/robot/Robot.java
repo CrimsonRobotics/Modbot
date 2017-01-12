@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team2526.robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import com.ctre.*;
+
+//import edu.wpi.first.wpilibj.CANTalon;
+//import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -55,7 +57,8 @@ public class Robot extends IterativeRobot {
     	}
     
     public static void PIDSetup(CANTalon talon){
-    	talon.changeControlMode(TalonControlMode.Position);
+    	talon.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//talon.changeControlMode(TalonControlMode.Position);
     	talon.setPID(0.3, 0, 0); //  read Basecamp post to learn how to tune-MTA. You can also set the values on the fly using the web-based configuration
     	talon.set(1000);
     }
