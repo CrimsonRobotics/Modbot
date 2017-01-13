@@ -70,6 +70,18 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		hasCommandBeenIssued = false;
 		
+		//clear sticky faults
+		backLeft.clearStickyFaults();
+		frontLeft.clearStickyFaults();
+		backRight.clearStickyFaults();
+		frontRight.clearStickyFaults();
+		
+		//  Clear accumlated values
+		backLeft.clearIAccum();
+		frontLeft.clearIAccum();
+		backRight.clearIAccum();
+		frontRight.clearIAccum();
+		
 		//setup left
 		backLeft.reset();
 		
@@ -162,6 +174,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("FrontLeft Velocity: " , frontLeft.getEncVelocity());
 		SmartDashboard.putNumber("FrontLeft getPosition: " , frontLeft.getPosition());
 		
+		//check for any faults
+		checkCANTalonFaults(backLeft);
+		checkCANTalonFaults(backRight);
+		checkCANTalonFaults(frontLeft);
+		checkCANTalonFaults(frontRight);
+		
 		Timer.delay(0.01);
 
 	}
@@ -196,8 +214,52 @@ public class Robot extends IterativeRobot {
 
 
 	public void testPeriodic() {
-
+		
 	}
 
+	public void checkCANTalonFaults(CANTalon myMotor) {
+		
+		if(myMotor.getFaultOverTemp() != 0) {
+			System.out.println("FaultOverTemp Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getFaultUnderVoltage() != 0) {
+			System.out.println("FaultUnderVoltage Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getFaultForLim() != 0) {
+			System.out.println("FaultForLim Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getFaultRevLim() != 0) {
+			System.out.println("FaultRevLim Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getFaultForSoftLim() != 0) {
+			System.out.println("FaultForSoftLim Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getFaultRevSoftLim() != 0) {
+			System.out.println("FaultRevSoftLim Device ID: " + myMotor.getDeviceID());
+		}
+		
+		// Sticky Faults
+
+		if(myMotor.getStickyFaultOverTemp() != 0) {
+			System.out.println("StickyFaultOverTemp Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getStickyFaultUnderVoltage() != 0) {
+			System.out.println("StickyFaultUnderVoltage Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getStickyFaultForLim() != 0) {
+			System.out.println("StickyFaultForLim Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getStickyFaultRevLim() != 0) {
+			System.out.println("StickyFaultRevLim Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getStickyFaultForSoftLim() != 0) {
+			System.out.println("StickyFaultForSoftLim Device ID: " + myMotor.getDeviceID());
+		}
+		if(myMotor.getStickyFaultRevSoftLim() != 0) {
+			System.out.println("StickyFaultRevSoftLim Device ID: " + myMotor.getDeviceID());
+		}
+
+		
+	}
 }
 
